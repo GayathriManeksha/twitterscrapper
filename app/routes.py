@@ -2,6 +2,7 @@ from flask import Flask, request, flash, url_for, redirect, render_template
 from app import app
 from selenium import webdriver
 from selenium.webdriver import Chrome
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from time import sleep
@@ -11,7 +12,8 @@ import json
 def unametoid(username):
     url = 'https://twitter.com/{}'.format(username)
     print(url)
-    driver = Chrome(executable_path=ChromeDriverManager().install())
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service)
     driver.get(url)
 
     html = driver.page_source
@@ -23,7 +25,7 @@ def unametoid(username):
 
 def idtouname(numid):
     url2='https://twitter.com/i/user/{}'.format(numid)
-    driver = webdriver.Chrome()
+    driver = Chrome(executable_path=ChromeDriverManager().install())
     driver.get(url2)
 
     html = driver.page_source
@@ -32,6 +34,7 @@ def idtouname(numid):
     # print(user_id.string)
     data = json.loads(user_id.string)
     print(data['author']['additionalName'])
+    return data['author']['additionalName']
 
 @app.route('/',methods=['GET','POST'])
 def home():
