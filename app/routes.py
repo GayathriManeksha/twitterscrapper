@@ -12,7 +12,7 @@ import json
 def unametoid(username):
     url = 'https://twitter.com/{}'.format(username)
     print(url)
-    service = Service(ChromeDriverManager().install())
+    service = Service(executable_path='chromedriver')
     driver = webdriver.Chrome(service=service)
     driver.get(url)
 
