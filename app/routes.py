@@ -12,20 +12,22 @@ import json
 def unametoid(username):
     url = 'https://twitter.com/{}'.format(username)
     print(url)
-    service = Service(executable_path='chromedriver')
+    service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service)
     driver.get(url)
 
     html = driver.page_source
     soup = BeautifulSoup(html, 'html.parser')
     user_id = soup.find('script', {'data-testid': 'UserProfileSchema-test'})
+    print(user_id)
     data = json.loads(user_id.string)
     print(data['author']['identifier'])
     return data['author']['identifier']
 
 def idtouname(numid):
     url2='https://twitter.com/i/user/{}'.format(numid)
-    driver = Chrome(executable_path=ChromeDriverManager().install())
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service)
     driver.get(url2)
 
     html = driver.page_source
@@ -39,7 +41,13 @@ def idtouname(numid):
 @app.route('/',methods=['GET','POST'])
 def home():
     if request.method=='POST':
-        print(request.form['username'])
-        value=unametoid(request.form['username'])
-        return render_template('base.html',value=value)
+        bt=request.form.get('bt')
+        if bt=='btn1':
+            print(request.form['username'])
+            value=unametoid(request.form['username'])
+            return render_template('base.html',valueid=value)
+        else:
+            print(request.form['numid'])
+            value=idtouname(request.form['numid'])
+            return render_template('base.html',valueun=value)
     return render_template('base.html')

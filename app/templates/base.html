@@ -13,11 +13,14 @@
 </head>
 
 <body>
+   <form class="align-self-baseline" method="post">
    <p>Enter your id</p>
-    <form class="align-self-baseline" method="post">
     <input type="text" name="username" placeholder="Enter username"></input>
-        <button type="submit" class="btn btn-dark mb-4 button text-light"><span>Convert</span></button>
-    </form>
-    <p>{{value}}</p>
+        <button name="bt" value="btn1" type="submit" class="btn btn-dark mb-4 button text-light"><span>Convert</span></button>
+    <p>{{valueid}}</p>
     <p>Enter your numerical id</p>
+        <input type="text" name="numid" placeholder="Enter numerical id"></input>
+        <button name="bt" value="btn2" type="submit" class="btn btn-dark mb-4 button text-light"><span>Convert</span></button>
+    </form>
+    <p>{{valueun}}</p>
 </body>
