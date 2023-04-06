@@ -1,6 +1,8 @@
 from flask import Flask, request, flash, url_for, redirect, render_template 
 from app import app
 from selenium import webdriver
+from selenium.webdriver import Chrome
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from time import sleep
 from bs4 import BeautifulSoup
@@ -9,7 +11,7 @@ import json
 def unametoid(username):
     url = 'https://twitter.com/{}'.format(username)
     print(url)
-    driver = webdriver.Chrome()
+    driver = Chrome(executable_path=ChromeDriverManager().install())
     driver.get(url)
 
     html = driver.page_source
